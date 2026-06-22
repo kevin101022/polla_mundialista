@@ -137,6 +137,12 @@ public class UsuarioController {
         if (username.isEmpty() || username.equals("Ingrese su nombre de usuario")) {
             registerView.getUserError().setText("El nombre de usuario es requerido.");
             ok = false;
+        } else if (username.toLowerCase().contains("admin")) {
+            registerView.getUserError().setText("Solo puede existir un administrador.");
+            ok = false;
+        } else if (usuarioDAO.existeUsuario(username)) {
+            registerView.getUserError().setText("Este nombre de usuario ya está en uso.");
+            ok = false;
         }
         if (password.isEmpty() || password.equals("Ingrese su contraseña")) {
             registerView.getPassError().setText("La contraseña es requerida.");

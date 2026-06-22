@@ -35,6 +35,22 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     @Override
+    public boolean existeUsuario(String username) {
+        String sql = "SELECT 1 FROM usuarios WHERE LOWER(username) = LOWER(?)";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return true; // En caso de error, bloqueamos por seguridad
+        }
+    }
+
+    @Override
     public Usuario iniciarSesion(String username, String password) {
         String sql = "SELECT * FROM usuarios WHERE username = ? AND password = ?";
         try (Connection conn = DatabaseConfig.getConnection();

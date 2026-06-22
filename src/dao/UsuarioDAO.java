@@ -14,6 +14,7 @@ public interface UsuarioDAO {
      * @return true si se registró exitosamente, false si el usuario ya existe o hubo un error.
      */
     boolean registrarUsuario(Usuario usuario);
+    boolean existeUsuario(String username);
 
     /**
      * Verifica las credenciales de un usuario.
